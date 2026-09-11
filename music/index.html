@@ -6,6 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Music | Maebysite v2.0</title>
     <link rel="stylesheet" href="/assets/styles.css">
+    <style media="screen">
+        .player {
+            width: min(100%, 22rem);
+            box-sizing: border-box;
+            margin: 1rem auto;
+            padding: 1rem 1.25rem;
+            background-color: #fff5fb;
+            border: 2px dashed #f4a6cf;
+            border-radius: 12px;
+        }
+
+        .now-playing {
+            margin-bottom: 0.75rem;
+        }
+
+        .now-playing .note {
+            display: inline-block;
+        }
+
+        .player.playing .note {
+            animation: bob 0.8s ease-in-out infinite alternate;
+        }
+
+        .player.playing .note:last-child {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes bob {
+            from { transform: translateY(2px); }
+            to { transform: translateY(-3px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .player.playing .note {
+                animation: none;
+            }
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .player button {
+            font: inherit;
+            color: #666666;
+            background-color: #ffe5f4;
+            border: 1px solid #f4a6cf;
+            border-radius: 999px;
+            padding: 0.2rem 0.8rem;
+            cursor: pointer;
+        }
+
+        .player button:hover {
+            color: #333333;
+            background-color: #ffd1ea;
+        }
+
+        #play {
+            min-width: 5.5rem;
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: #666666;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .progress input {
+            flex: 1;
+            min-width: 0;
+            accent-color: #f28ec2;
+            cursor: pointer;
+        }
+
+        .track-list a.current {
+            font-weight: bold;
+        }
+
+        .track-list a.current::before {
+            content: "♪ ";
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -18,7 +106,35 @@
 
     <h2>Music</h2>
 
+    <div class="player" id="player">
+        <div class="now-playing">
+            <span class="note">♪</span>
+            <span id="track-title"></span>
+            <span class="note">♪</span>
+        </div>
+        <div class="controls">
+            <button id="prev" aria-label="Previous song">&laquo;</button>
+            <button id="play">play</button>
+            <button id="next" aria-label="Next song">&raquo;</button>
+        </div>
+        <div class="progress">
+            <span id="current-time">0:00</span>
+            <input type="range" id="seek" min="0" max="0" step="0.1" value="0" aria-label="Seek">
+            <span id="duration">0:00</span>
+        </div>
+        <audio id="audio" preload="metadata"></audio>
+    </div>
 
+    <ul class="blog-list track-list">
+        <li>
+            <div>2025-10-30</div>
+            <a href="audio/2025-10-30%20-%20Simple%20Now.m4a">Simple Now</a>
+        </li>
+        <li>
+            <div>2025-10-04</div>
+            <a href="audio/2025-10-04%20-%20Oldest%20Wound.mp3">Oldest Wound</a>
+        </li>
+    </ul>
 
     <hr>
 
@@ -27,5 +143,81 @@
         <br>
         Last updated: 2026-09-10
     </p>
+
+    <script>
+        const player = document.getElementById('player');
+        const audio = document.getElementById('audio');
+        const title = document.getElementById('track-title');
+        const playButton = document.getElementById('play');
+        const seek = document.getElementById('seek');
+        const currentTime = document.getElementById('current-time');
+        const duration = document.getElementById('duration');
+        const tracks = Array.from(document.querySelectorAll('.track-list a'));
+        let current = 0;
+
+        function formatTime(seconds) {
+            if (!isFinite(seconds)) return '0:00';
+            const m = Math.floor(seconds / 60);
+            const s = Math.floor(seconds % 60);
+            return m + ':' + String(s).padStart(2, '0');
+        }
+
+        function load(index) {
+            current = (index + tracks.length) % tracks.length;
+            audio.src = tracks[current].getAttribute('href');
+            title.textContent = tracks[current].textContent;
+            tracks.forEach((track, i) => track.classList.toggle('current', i === current));
+            seek.value = 0;
+            currentTime.textContent = '0:00';
+        }
+
+        function skip(step) {
+            const wasPlaying = !audio.paused;
+            load(current + step);
+            if (wasPlaying) audio.play();
+        }
+
+        playButton.addEventListener('click', () => {
+            audio.paused ? audio.play() : audio.pause();
+        });
+        document.getElementById('prev').addEventListener('click', () => skip(-1));
+        document.getElementById('next').addEventListener('click', () => skip(1));
+
+        tracks.forEach((track, i) => {
+            track.addEventListener('click', (event) => {
+                event.preventDefault();
+                load(i);
+                audio.play();
+            });
+        });
+
+        audio.addEventListener('play', () => {
+            playButton.textContent = 'pause';
+            player.classList.add('playing');
+        });
+        audio.addEventListener('pause', () => {
+            playButton.textContent = 'play';
+            player.classList.remove('playing');
+        });
+        audio.addEventListener('loadedmetadata', () => {
+            seek.max = audio.duration;
+            duration.textContent = formatTime(audio.duration);
+        });
+        audio.addEventListener('timeupdate', () => {
+            seek.value = audio.currentTime;
+            currentTime.textContent = formatTime(audio.currentTime);
+        });
+        audio.addEventListener('ended', () => {
+            // play through the list, then stop back at the top
+            load(current + 1);
+            if (current !== 0) audio.play();
+        });
+
+        seek.addEventListener('input', () => {
+            audio.currentTime = seek.value;
+        });
+
+        load(0);
+    </script>
 </body>
 </html>
