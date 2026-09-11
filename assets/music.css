@@ -1,0 +1,86 @@
+.player {
+    width: min(100%, 22rem);
+    box-sizing: border-box;
+    margin: 1rem auto;
+    padding: 1rem 1.25rem;
+    background-color: #ffebf5;
+    border: 2px dashed #f4a6cf;
+    border-radius: 4px;
+}
+
+.now-playing {
+    margin-bottom: 0.75rem;
+}
+
+.now-playing .note {
+    display: inline-block;
+}
+
+.player.playing .note {
+    animation: bob 0.8s ease-in-out infinite alternate;
+}
+
+.player.playing .note:last-child {
+    animation-delay: 0.4s;
+}
+
+@keyframes bob {
+    from { transform: translateY(2px); }
+    to { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .player.playing .note {
+        animation: none;
+    }
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.player button {
+    font: inherit;
+    color: #666666;
+    background-color: #ffe5f4;
+    border: 1px solid #f4a6cf;
+    border-radius: 999px;
+    padding: 0.2rem 0.8rem;
+    cursor: pointer;
+}
+
+.player button:hover {
+    color: #333333;
+    background-color: #ffd1ea;
+}
+
+#play {
+    min-width: 5.5rem;
+}
+
+.progress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: #666666;
+    font-variant-numeric: tabular-nums;
+}
+
+.progress input {
+    flex: 1;
+    min-width: 0;
+    accent-color: #f28ec2;
+    cursor: pointer;
+}
+
+.track-list a.current {
+    font-weight: bold;
+}
+
+.track-list a.current::before {
+    content: "♪ ";
+}
