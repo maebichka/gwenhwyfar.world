@@ -264,7 +264,7 @@
             function showImage(index) {
             current = (index + images.length) % images.length;
 
-            lightboxImg.src = images[current].dataset.full;
+            lightboxImg.src = images[current].dataset.full || images[current].src;
             lightboxImg.alt = images[current].alt;
             lightboxCaption.textContent = images[current].alt;
 
