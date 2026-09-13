@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const encodedEmail = 'bWFlYmljaGthQGdtYWlsLmNvbQ==';
+    const encodedEmail = 'Z3dlbmh3eWZhci53b3JsZEBnbWFpbC5jb20=';
     const email = atob(encodedEmail);
 
     // modify all links with the email-link class
