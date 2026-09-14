@@ -91,6 +91,11 @@ ul.blog-list {
     display: block;
 }
 
+.art-grid img {
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
 img {
     max-width: 100%;
     height: auto;
