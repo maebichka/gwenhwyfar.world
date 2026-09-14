@@ -96,6 +96,11 @@ ul.blog-list {
     object-fit: cover;
 }
 
+.art-feed {
+    width: 75%;
+    margin: auto;
+}
+
 img {
     max-width: 100%;
     height: auto;
