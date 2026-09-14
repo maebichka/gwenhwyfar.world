@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="48f96fc4-048f-4b75-ba43-fbcd7aea50d5"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paintings, prints, drawings | Gwenhwyfar's World</title>
+    <link rel="stylesheet" href="/assets/styles.css">
+    <style media="screen">
+    .gallery-img {
+        cursor: pointer;
+    }
+
+    .lightbox {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.9);
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        z-index: 9999;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .lightbox.open {
+        display: flex;
+    }
+
+    .lightbox-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 90vw;
+        max-height: 95vh;
+    }
+
+    .lightbox-image-wrap {
+        position: relative;
+        display: inline-block;
+        line-height: 0;
+    }
+
+    .lightbox img {
+        display: block;
+        max-width: 85vw;
+        max-height: 82vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        user-select: none;
+    }
+
+    #lightbox-caption {
+        color: white;
+        margin-top: 12px;
+        font-size: 16px;
+        line-height: 1.4;
+        text-align: center;
+        max-width: 85vw;
+    }
+
+    .lightbox button {
+        flex: 0 0 auto;
+        font-size: 40px;
+        color: white;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 20px;
+    }
+
+    .lightbox button:hover {
+        color: #999999;
+    }
+
+    .lightbox button:active {
+        color: #333333;
+    }
+
+    /* Invisible tap zones for mobile */
+    .mobile-tap-zone {
+        display: none;
+    }
+
+    @media (max-width: 600px) {
+        .lightbox {
+            padding: 10px;
+        }
+
+        .lightbox button {
+            display: none;
+        }
+
+        .lightbox-content {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        .lightbox img {
+            max-width: 96vw;
+            max-height: 85vh;
+        }
+
+        #lightbox-caption {
+            max-width: 92vw;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        .lightbox-image-wrap {
+            position: relative;
+        }
+
+        .mobile-tap-zone {
+            display: block;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 30%;
+            z-index: 2;
+        }
+
+        .mobile-tap-left {
+            left: 0;
+        }
+
+        .mobile-tap-right {
+            right: 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/art">Art</a>
+    </nav>
+
+    <hr>
+
+    <h2>Paintings, prints, drawings</h2>
+    <h4>2022–2023</h4>
+
+    <div class="insta-grid prints">
+
+        <img
+            src="images/originals/2022 - etching-body.jpg"
+            data-full="images/originals/2022 - etching-body.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2023-03-08 - painting-reclining-blue-woman.jpg"
+            data-full="images/originals/2023-03-08 - painting-reclining-blue-woman.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022 - drawing-arms.jpg"
+            data-full="images/originals/2022 - drawing-arms.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022-02-01 - drawing-cat.jpg"
+            data-full="images/originals/2022-02-01 - drawing-cat.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022-05 - etching-jonah.jpg"
+            data-full="images/originals/2022-05 - etching-jonah.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022-04 - etching-cat.jpg"
+            data-full="images/originals/2022-04 - etching-cat.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022-05-16 - lino-bedroom.jpg"
+            data-full="images/originals/2022-05-16 - lino-bedroom.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022 - drawing-golliwog.jpg"
+            data-full="images/originals/2022 - drawing-golliwog.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+        <img
+            src="images/originals/2022 - lino-naked-woman.jpg"
+            data-full="images/originals/2022 - lino-naked-woman.jpg"
+            class="gallery-img"
+            loading="lazy"
+            decoding="async"
+        >
+    </div>
+
+    <div id="lightbox" class="lightbox">
+        <button id="prev" type="button">◀</button>
+        <div class="lightbox-content">
+            <div class="lightbox-image-wrap">
+                <img id="lightbox-img" src="">
+                <div id="mobile-prev" class="mobile-tap-zone mobile-tap-left"></div>
+                <div id="mobile-next" class="mobile-tap-zone mobile-tap-right"></div>
+            </div>
+            <div id="lightbox-caption"></div>
+        </div>
+        <button id="next" type="button">▶</button>
+    </div>
+
+    <hr>
+
+    <p>
+        Created: 2026-09-13
+        <br>
+        Last updated: 2026-09-13
+    </p>
+    <script>
+    const images = [...document.querySelectorAll('.gallery-img')];
+    const lightbox = document.querySelector('#lightbox');
+    const lightboxImg = document.querySelector('#lightbox-img');
+    const lightboxCaption = document.querySelector('#lightbox-caption');
+
+    const prevButton = document.querySelector('#prev');
+    const nextButton = document.querySelector('#next');
+
+    const mobilePrev = document.querySelector('#mobile-prev');
+    const mobileNext = document.querySelector('#mobile-next');
+
+    let current = 0;
+
+    function showImage(index) {
+        current = (index + images.length) % images.length;
+
+        lightboxImg.src = images[current].dataset.full;
+        lightboxImg.alt = images[current].alt;
+        lightboxCaption.textContent = images[current].alt;
+
+        lightbox.classList.add('open');
+    }
+
+    function closeLightbox() {
+        lightbox.classList.remove('open');
+    }
+
+    function previousImage() {
+        showImage(current - 1);
+    }
+
+    function nextImage() {
+        showImage(current + 1);
+    }
+
+    // Open lightbox from gallery
+    images.forEach((img, i) => {
+        img.addEventListener('click', () => {
+            showImage(i);
+        });
+    });
+
+    // Desktop arrows
+    prevButton.addEventListener('click', previousImage);
+    nextButton.addEventListener('click', nextImage);
+
+    // Mobile tap zones
+    mobilePrev.addEventListener('click', previousImage);
+    mobileNext.addEventListener('click', nextImage);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', e => {
+        if (!lightbox.classList.contains('open')) return;
+
+        if (e.key === 'ArrowLeft') {
+            previousImage();
+        }
+
+        if (e.key === 'ArrowRight') {
+            nextImage();
+        }
+
+        if (e.key === 'Escape') {
+            closeLightbox();
+        }
+    });
+
+    // Click dark background to close
+    lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+    </script>
+
+</body>
+
+</html>
