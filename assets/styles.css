@@ -17,6 +17,10 @@ div.left {
     text-align: left;
 }
 
+h4 {
+    margin-bottom: 0.5em;
+}
+
 a {
     color: #666666;
 }
