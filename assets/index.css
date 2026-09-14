@@ -1,0 +1,25 @@
+.art-link {
+    color: #555555;
+}
+
+.art-link a {
+    color: #ff8ccf;
+}
+
+.art-link a:hover {
+    color: #0ce0d3;
+}
+
+.art-link a:active {
+    color: #ffe85f;
+}
+
+.art-image {
+    width: 40%;
+}
+
+@media (max-width: 600px) {
+    .art-image {
+        width: 80%;
+    }
+}
