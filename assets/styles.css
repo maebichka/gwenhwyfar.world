@@ -104,6 +104,10 @@ ul.blog-list {
 .art-feed {
     width: 75%;
     margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
 }
 
 img {
