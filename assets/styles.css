@@ -85,6 +85,12 @@ ul.blog-list {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.pelle-cass {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    max-width: 800px;
+    margin: 0 auto;
+}
+
 .prints {
     grid-template-columns: 1fr 1fr 1fr;
 }
