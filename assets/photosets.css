@@ -12,37 +12,30 @@ body > p {
 }
 
 .PhotoSet {
-    background-image: url("/art/robot-cafe/images/thumbs/bg.webp");
     background-repeat: no-repeat;
     background-size: cover;
 }
 
-.PhotoSet h2,
-.PhotoSet p {
+.PhotoSet#robot {
+    background-image: url("/art/robot-cafe/images/thumbs/bg.webp");
+}
+
+.PhotoSet#barb {
+    background-image: url("/art/barb/images/thumbs/bg.webp");
+}
+
+.PhotoSet#agoraphobia {
+    background-image: url("/art/agoraphobia/images/thumbs/bg.webp");
+}
+
+.PhotoSet h2 {
     text-align: center;
     color: white;
     font-family: georgia;
     font-style: italic;
-}
-
-.PhotoSet h2 {
     padding-top: 10vh;
     text-transform: uppercase;
     font-size: 3rem;
-}
-
-.PhotoSet p {
-    font-size: medium;
-}
-
-.PhotoSet p a {
-    color: inherit;
-    text-decoration: none;
-}
-
-.PhotoSet p a:hover {
-    color: inherit;
-    opacity: 0.5;
 }
 
 .Photos {
