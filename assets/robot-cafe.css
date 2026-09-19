@@ -1,0 +1,94 @@
+body {
+    max-width: 100%;
+}
+
+nav,
+body > hr,
+body > h2,
+body > p {
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.PhotoSet {
+    background-image: url("/art/robot-cafe/images/thumbs/bg.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.PhotoSet h2,
+.PhotoSet p {
+    text-align: center;
+    color: white;
+    font-family: georgia;
+    font-style: italic;
+}
+
+.PhotoSet h2 {
+    padding-top: 10vh;
+    text-transform: uppercase;
+    font-size: 3rem;
+}
+
+.PhotoSet p {
+    font-size: medium;
+}
+
+.PhotoSet p a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.PhotoSet p a:hover {
+    color: inherit;
+    opacity: 0.5;
+}
+
+.Photos {
+    display: flex;
+    flex-direction: column;
+}
+
+.Photo {
+    margin: 0 auto;
+    padding: 10vh 0;
+}
+
+.Photo img {
+    max-width: 80vw;
+    max-height: 80vh;
+}
+
+.Photo.row {
+    width: 80vw;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+@media (max-width: 1200px) {
+    nav,
+    body > hr,
+    body > h2,
+    body > p {
+        max-width: 90%;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .PhotoSet h2 {
+        font-size: 1.6875rem;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .Photo.row {
+        display: inline;
+        padding: 0;
+        text-align: center;
+    }
+    .Photo.row img {
+        margin: 10vh 0;
+        height: auto;
+    }
+}
