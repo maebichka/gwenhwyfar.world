@@ -84,3 +84,7 @@
 .track-list a.current::before {
     content: "♪ ";
 }
+
+.track-length {
+    color: #999999;
+}

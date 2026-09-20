@@ -16,10 +16,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return m + ':' + String(s).padStart(2, '0');
     }
 
+    const titles = tracks.map((track) => track.textContent);
+
     function load(index) {
         current = (index + tracks.length) % tracks.length;
         audio.src = tracks[current].getAttribute('href');
-        title.textContent = tracks[current].textContent;
+        title.textContent = titles[current];
         tracks.forEach((track, i) => track.classList.toggle('current', i === current));
         seek.value = 0;
         currentTime.textContent = '0:00';
@@ -69,6 +71,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     seek.addEventListener('input', () => {
         audio.currentTime = seek.value;
+    });
+
+    // ask the browser for each track's length and show it next to the title
+    tracks.forEach((track) => {
+        const probe = new Audio();
+        probe.preload = 'metadata';
+        probe.addEventListener('loadedmetadata', () => {
+            const length = document.createElement('span');
+            length.className = 'track-length';
+            length.textContent = ' (' + formatTime(probe.duration) + ')';
+            track.after(length);
+        });
+        probe.src = track.getAttribute('href');
     });
 
     load(0);
