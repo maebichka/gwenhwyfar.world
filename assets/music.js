@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentTime = document.getElementById('current-time');
     const duration = document.getElementById('duration');
     const tracks = Array.from(document.querySelectorAll('.track-list a'));
-    let current = 0;
+    let current = -1; // no track is loaded until one is picked
 
     function formatTime(seconds) {
         if (!isFinite(seconds)) return '0:00';
@@ -29,13 +29,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function skip(step) {
         const wasPlaying = !audio.paused;
-        load(current + step);
+        // with nothing loaded, next starts at the top and prev at the bottom
+        load(current === -1 ? (step > 0 ? 0 : -1) : current + step);
         if (wasPlaying) audio.play();
     }
 
-    playButton.addEventListener('click', () => {
-        audio.paused ? audio.play() : audio.pause();
-    });
+    function toggle() {
+        if (!audio.paused) {
+            audio.pause();
+            return;
+        }
+        if (current === -1) load(0);
+        audio.play();
+    }
+
+    playButton.addEventListener('click', toggle);
     document.getElementById('prev').addEventListener('click', () => skip(-1));
     document.getElementById('next').addEventListener('click', () => skip(1));
 
@@ -45,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // a focused button already toggles itself on space
         if (document.activeElement && document.activeElement.tagName === 'BUTTON') return;
         event.preventDefault(); // otherwise the page scrolls
-        audio.paused ? audio.play() : audio.pause();
+        toggle();
     });
 
     tracks.forEach((track, i) => {
@@ -94,6 +102,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         probe.src = track.getAttribute('href');
     });
-
-    load(0);
 });
