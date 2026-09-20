@@ -70,11 +70,65 @@
     font-variant-numeric: tabular-nums;
 }
 
-.progress input {
+.seek-wrap {
+    --wave-colour: #f4a6cf;
+    --wave-played: #e0559b;
+    position: relative;
     flex: 1;
     min-width: 0;
-    accent-color: #f28ec2;
+    height: 2.5rem;
+}
+
+#waveform {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* the seek bar still does the seeking, it just sits on top of the waveform */
+.progress input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
     cursor: pointer;
+}
+
+.progress input::-webkit-slider-runnable-track {
+    height: 100%;
+    background: transparent;
+}
+
+.progress input::-moz-range-track {
+    height: 100%;
+    background: transparent;
+}
+
+.progress input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2px;
+    height: 100%;
+    background-color: #b23c7c;
+    border: 0;
+    border-radius: 1px;
+}
+
+.progress input::-moz-range-thumb {
+    width: 2px;
+    height: 2.5rem;
+    background-color: #b23c7c;
+    border: 0;
+    border-radius: 1px;
+}
+
+.progress input:focus-visible {
+    outline: 2px solid #f28ec2;
+    outline-offset: 2px;
 }
 
 .track-list a.current {
