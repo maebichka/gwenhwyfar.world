@@ -77,8 +77,6 @@
     cursor: pointer;
 }
 
-/* fixed title column (beats ul.blog-list's max-content) so bolding the
-   current track can't resize the grid */
 ul.track-list {
     grid-template-columns: max-content minmax(0, 12rem);
 }
@@ -87,7 +85,6 @@ ul.track-list {
     font-weight: bold;
 }
 
-/* the ♪ is always there, just invisible, so the titles never shift sideways */
 .track-list a::before {
     content: "♪ ";
     font-weight: normal;
