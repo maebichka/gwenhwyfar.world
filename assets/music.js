@@ -39,6 +39,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('prev').addEventListener('click', () => skip(-1));
     document.getElementById('next').addEventListener('click', () => skip(1));
 
+    // spacebar works anywhere on the page, not just on the play button
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== ' ') return;
+        // a focused button already toggles itself on space
+        if (document.activeElement && document.activeElement.tagName === 'BUTTON') return;
+        event.preventDefault(); // otherwise the page scrolls
+        audio.paused ? audio.play() : audio.pause();
+    });
+
     tracks.forEach((track, i) => {
         track.addEventListener('click', (event) => {
             event.preventDefault();
