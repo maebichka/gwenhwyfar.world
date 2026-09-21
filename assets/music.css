@@ -89,7 +89,6 @@ ul.track-list {
 
 .track-list a::before {
     content: "♪ ";
-    font-weight: normal;
     visibility: hidden;
 }
 
