@@ -79,11 +79,12 @@
 }
 
 ul.track-list {
-    grid-template-columns: max-content minmax(0, 12rem);
+    grid-template-columns: max-content minmax(0, max-content);
 }
 
 .track-list a.current {
-    font-weight: bold;
+    color: #000000;
+    text-decoration: none;
 }
 
 .track-list a::before {
