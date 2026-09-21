@@ -57,7 +57,8 @@
 }
 
 #play {
-    min-width: 5.5rem;
+    /* wide enough for "loading…" so the row doesn't jump */
+    min-width: 6.5rem;
 }
 
 .progress {

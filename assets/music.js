@@ -16,7 +16,23 @@ document.addEventListener('DOMContentLoaded', function() {
         return m + ':' + String(s).padStart(2, '0');
     }
 
+    function lengthOf(track) {
+        const span = track.nextElementSibling;
+        if (!span || !span.classList.contains('track-length')) return '0:00';
+        return span.textContent.replace(/[()]/g, '').trim();
+    }
+
     const titles = tracks.map((track) => track.textContent);
+
+    let loading = false;
+
+    function setPlayLabel() {
+        if (audio.paused) {
+            playButton.textContent = 'play';
+        } else {
+            playButton.textContent = loading ? 'loading\u2026' : 'pause';
+        }
+    }
 
     function load(index) {
         current = (index + tracks.length) % tracks.length;
@@ -25,6 +41,8 @@ document.addEventListener('DOMContentLoaded', function() {
         tracks.forEach((track, i) => track.classList.toggle('current', i === current));
         seek.value = 0;
         currentTime.textContent = '0:00';
+        // show the length straight away rather than waiting for the file
+        duration.textContent = lengthOf(tracks[current]);
     }
 
     function skip(step) {
@@ -64,14 +82,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    audio.addEventListener('play', () => {
-        playButton.textContent = 'pause';
-        player.classList.add('playing');
-    });
+    audio.addEventListener('play', setPlayLabel);
     audio.addEventListener('pause', () => {
-        playButton.textContent = 'play';
         player.classList.remove('playing');
+        setPlayLabel();
     });
+    // the notes only bob while sound is actually coming out
+    ['loadstart', 'waiting', 'seeking'].forEach((name) => audio.addEventListener(name, () => {
+        loading = true;
+        player.classList.remove('playing');
+        setPlayLabel();
+    }));
+    ['playing', 'canplay', 'seeked'].forEach((name) => audio.addEventListener(name, () => {
+        loading = false;
+        if (!audio.paused) player.classList.add('playing');
+        setPlayLabel();
+    }));
     audio.addEventListener('loadedmetadata', () => {
         seek.max = audio.duration;
         duration.textContent = formatTime(audio.duration);
@@ -90,15 +116,20 @@ document.addEventListener('DOMContentLoaded', function() {
         audio.currentTime = seek.value;
     });
 
-    // ask the browser for each track's length and show it next to the title
+    // lengths sit in the markup so they show without JS; fill in any that are missing
     tracks.forEach((track) => {
+        const existing = track.nextElementSibling;
+        if (existing && existing.classList.contains('track-length')) return;
+
+        const length = document.createElement('span');
+        length.className = 'track-length';
+        track.after(length);
+
         const probe = new Audio();
         probe.preload = 'metadata';
         probe.addEventListener('loadedmetadata', () => {
-            const length = document.createElement('span');
-            length.className = 'track-length';
             length.textContent = ' (' + formatTime(probe.duration) + ')';
-            track.after(length);
+            if (tracks[current] === track) duration.textContent = formatTime(probe.duration);
         });
         probe.src = track.getAttribute('href');
     });
