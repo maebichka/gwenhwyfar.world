@@ -37,8 +37,8 @@
     <table class="blog-dates" aria-label="Blog posts">
         <thead>
             <tr>
-                <th scope="col">Created</th>
-                <th scope="col">Updated</th>
+                <th scope="col"><button type="button">Created<span class="sort-caret" aria-hidden="true"></span></button></th>
+                <th scope="col" aria-sort="descending"><button type="button">Updated<span class="sort-caret" aria-hidden="true"></span></button></th>
                 <th scope="col" aria-label="Post"></th>
             </tr>
         </thead>
@@ -73,5 +73,31 @@
         <br>
         Last updated: 2026-11-22
     </p>
+    <script>
+        const blogTable = document.querySelector('.blog-dates');
+        const blogRows = blogTable.tBodies[0];
+        const dateButtons = blogTable.tHead.querySelectorAll('button');
+        const date = (row, column) => row.cells[column].querySelector('time').dateTime;
+
+        dateButtons.forEach((button, column) => {
+            const heading = button.parentElement;
+
+            button.addEventListener('click', () => {
+                const ascending = heading.getAttribute('aria-sort') === 'descending';
+                const rows = Array.from(blogRows.rows);
+                const otherColumn = 1 - column;
+
+                rows.sort((first, second) => {
+                    const order = date(first, column).localeCompare(date(second, column))
+                        || date(first, otherColumn).localeCompare(date(second, otherColumn));
+                    return ascending ? order : -order;
+                });
+                blogRows.append(...rows);
+
+                blogTable.tHead.querySelector('[aria-sort]')?.removeAttribute('aria-sort');
+                heading.setAttribute('aria-sort', ascending ? 'ascending' : 'descending');
+            });
+        });
+    </script>
 </body>
 </html>

@@ -71,6 +71,40 @@ ul.blog-list {
     text-align: left;
 }
 
+.blog-dates button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+}
+
+.blog-dates button:hover {
+    text-decoration: underline;
+}
+
+.blog-dates .sort-caret {
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin-left: 0.35em;
+    vertical-align: 0.15em;
+    border-top: 1px solid;
+    border-right: 1px solid;
+    visibility: hidden;
+}
+
+.blog-dates [aria-sort="ascending"] .sort-caret {
+    visibility: visible;
+    transform: rotate(-45deg);
+}
+
+.blog-dates [aria-sort="descending"] .sort-caret {
+    visibility: visible;
+    transform: rotate(135deg);
+}
+
 .blog-dates :is(th, td) {
     padding: 0;
     vertical-align: top;
