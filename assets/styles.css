@@ -59,6 +59,35 @@ ul.blog-list {
     display: contents;
 }
 
+.blog-dates {
+    border-collapse: collapse;
+    margin: 1rem auto;
+    width: fit-content;
+    text-align: left;
+}
+
+.blog-dates th {
+    font-weight: normal;
+    text-align: left;
+}
+
+.blog-dates :is(th, td) {
+    padding: 0;
+    vertical-align: top;
+}
+
+.blog-dates :is(th, td):first-child {
+    padding-right: 0.75rem;
+}
+
+.blog-dates :is(th, td):nth-child(2) {
+    padding-right: 2rem;
+}
+
+.blog-dates time {
+    white-space: nowrap;
+}
+
 .art-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
